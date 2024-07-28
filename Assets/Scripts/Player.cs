@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] Collider2D _collider2d;
     CinemachineImpulseSource _impulseSource;
     Jhc980330_PlayerController _playerController;
     SpriteRenderer[] renderers;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     public int MMp;
     public int Att;
 
+    [SerializeField] private GameObject HurtEffect;
     [SerializeField] private bool isHurt;
     [SerializeField] private bool isKnockBack;
     [SerializeField] private float noHitTime;
@@ -48,9 +50,9 @@ public class Player : MonoBehaviour
     }
     public void Hurt(int damage,Vector2 pos)
     {
+        _collider2d.enabled = false;
         if (!isHurt)
         {
-            Debug.Log(_impulseSource);
             CameraShakeManager.instance.CameraShake(_impulseSource);
             isHurt = true;
             Hp -= damage;
@@ -60,6 +62,8 @@ public class Player : MonoBehaviour
             }
             else
             {
+                var hurtEffect = Instantiate(HurtEffect, this.transform.position, Quaternion.identity);
+                hurtEffect.transform.localScale *= 0.5f;
                 float x = transform.position.x;
                 if (x < 0) x = 1; else x = -1;
                 StartCoroutine(Knockback(x));
@@ -70,7 +74,10 @@ public class Player : MonoBehaviour
     }
     IEnumerator HurtRoutine()
     {
+        this.gameObject.layer = LayerMask.NameToLayer("HurtPlayer");
         yield return new WaitForSeconds(noHitTime);
+        this.gameObject.layer = LayerMask.NameToLayer("Player");
+        _collider2d.enabled = true;
         isHurt = false;
     }
     IEnumerator AlphaBlink()

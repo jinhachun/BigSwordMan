@@ -31,7 +31,8 @@ public class AttackEffect : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision == null) return;
-        
+        Debug.Log(collision.name);
+
         if (IsInLayerMask(collision.gameObject, groundLayer))
         {
             if (attackDirection.y >= 0) return;
@@ -43,6 +44,11 @@ public class AttackEffect : MonoBehaviour
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("EnemyCollide");
+            if (attackDirection.y >= 0) { }
+            else
+            {
+                playerRb.velocity = (new Vector2(playerRb.velocity.x, player.jumpForce / 2));
+            }
             var enemy = collision.gameObject.GetComponent<Boss>();
             enemy.Hurt();
             _player.EarnMp();
@@ -89,9 +95,11 @@ public class AttackEffect : MonoBehaviour
         Vector2 collisionPoint = collision.ClosestPoint(transform.position);
         Vector2 collisionDirection = (collisionPoint - (Vector2)transform.position).normalized;
         CreateEffect(gameObject, collisionPoint, collisionDirection);
-        tween.Kill();
-        if(isDestroy) 
+        if (isDestroy)
+        {
+            tween.Kill();
             Destroy(this.gameObject);
+        }
     }
     bool IsInLayerMask(GameObject obj, LayerMask layerMask)
     {

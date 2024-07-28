@@ -61,6 +61,7 @@ public class Jhc980330_PlayerController : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private GameObject attackObject;
     [SerializeField] private GameObject spriteObject;
+    [SerializeField] private Transform hookObject;
 
     [SerializeField] CameraFollowObject _followObject;
 
@@ -236,11 +237,13 @@ public class Jhc980330_PlayerController : MonoBehaviour
         if(isWalled() && !isGrounded() && horizontal !=0)
         {
             isWalling = true;
+            hookObject.gameObject.SetActive(true);
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlideSpeed, float.MaxValue));
         }
         else
         {
             isWalling = false;
+            hookObject.gameObject.SetActive(false);
         }
     }
     float wallJumpKeyInputCounter;

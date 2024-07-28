@@ -6,6 +6,7 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     public GameObject sprite;
+    Collider2D _collider;
     Transform player;
     Player _player;
     public int hp;
@@ -19,6 +20,7 @@ public class Boss : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         _player = player.GetComponent<Player>();
+        _collider = player.GetComponent<Collider2D>();
     }
     public void Update()
     {
@@ -26,11 +28,11 @@ public class Boss : MonoBehaviour
     public void Hurt()
     {
         this.hp -= _player.Att;
+        if (this.hp < 0) { hp = 0; }
     }
+    
     public void TurnCheck()
     {
-        Debug.Log("ÅÏÃ¼Å© =====================================================");
-        Debug.Log($"{this.transform.rotation.y} ==== {player.transform.position} === {transform.position.x} ");
         if (this.transform.rotation.y < 0 && player.transform.position.x<this.transform.position.x)
         {
             isWatchingLeft = true;

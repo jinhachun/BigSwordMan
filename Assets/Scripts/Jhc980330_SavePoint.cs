@@ -28,6 +28,7 @@ public class Jhc980330_SavePoint : MonoBehaviour
         if(!isChkPoint) return;
         if(Jhc980330_GameManager.Instance.isSavePoint(this.gameObject))
         {
+            Debug.Log("¤¾¤·");
             Off();
         }
     }

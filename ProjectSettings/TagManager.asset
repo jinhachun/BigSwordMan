@@ -13,6 +13,7 @@ TagManager:
   - Lever
   - Enemy
   - EnemyAttackZone
+  - PlayerHitZone
   layers:
   - Default
   - TransparentFX
@@ -22,10 +23,10 @@ TagManager:
   - UI
   - Wall
   - UnAttackable
-  - 
+  - Parry
   - Player
-  - 
-  - 
+  - HurtPlayer
+  - Enemy
   - 
   - 
   - 
@@ -53,11 +54,11 @@ TagManager:
   - name: Enemy
     uniqueID: 3148404205
     locked: 0
-  - name: Player
-    uniqueID: 1548381793
-    locked: 0
   - name: Ground
     uniqueID: 2198859049
+    locked: 0
+  - name: Player
+    uniqueID: 1548381793
     locked: 0
   - name: InGameUI
     uniqueID: 1305675399
